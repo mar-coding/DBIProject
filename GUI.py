@@ -1,13 +1,11 @@
 from tkinter import Listbox, Label, scrolledtext
-
+from time import *
 from module.Tree import BPlusTree
 
-import subprocess as sp
 import tkinter as tk
 
 INFILENAME = "static/input.txt"
 NUMBERS = []
-
 
 def main():
     master = tk.Tk()
@@ -38,23 +36,20 @@ def main():
             for line in Input:
                 inputScrollText.insert('insert', line)
                 for num in line.split(' '):
-                    NUMBERS.append(num)
-        print(NUMBERS)
+                    NUMBERS.append(int(num))
 
     def perform():
         outputScrollText.delete(1.0, tk.END)
         ch = algoLbox.curselection()[0]
         output = None
         if ch == 0:
-            print("aa")
             bptree = BPlusTree(4)
-
             for n in NUMBERS:
                 # because its just test dont use real value
                 bptree.insert(n, 20)
+                sleep(0.01)
             output = bptree
-            bptree.printTree()
-        # outputScrollText.insert('insert', output)
+        outputScrollText.insert('insert', output)
 
     def clearall():
         inputScrollText.delete(1.0, tk.END)
