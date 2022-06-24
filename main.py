@@ -1,15 +1,7 @@
-from kivy.app import App
-from kivy.uix.button import Button
 from module.Tree import BPlusTree
 
 
-class Test01App(App):
-    def build(self):
-        return Button(text='Click Me!')
-
-
 def main():
-    # Test01App().run()
     bpt = BPlusTree(order=4)
     bpt.insert(10, 20)
     bpt.insert(22, 20)
@@ -25,6 +17,7 @@ def main():
     # bpt.delete(26)
     # bpt.delete(6)
 
+    # print(bpt)
     bpt.printTree()
     # bpt.showAllData()
 

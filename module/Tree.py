@@ -317,6 +317,29 @@ class BPlusTree(object):
             print('The b++ Tree is empty!')
             return
         queue = [self.root, 0]
+        print("{:<8} {:<15} {:<10} {:<10}".format('Level', 'Keys', 'ID', 'PID'))
+        while len(queue) > 0:
+            node = queue.pop(0)
+            height = queue.pop(0)
+            temp = ""
+            if not isinstance(node, LeafNode):
+                queue += self.intersperse(node.values, height + 1)
+
+            for i in node.keys:
+                temp += str(i) + "|"
+
+            if node.parent:
+                pTemp = str(node.parent.uid)
+            else:
+                pTemp = "None"
+
+            print("{:<8} {:<15} {:<10} {:<10}".format(str(height), temp[0:len(temp)-1], node.uid, pTemp))
+
+    def __str__(self):
+        output = ""
+        if self.root.isEmpty():
+            return "The b++ Tree is empty!"
+        queue = [self.root, 0]
 
         while len(queue) > 0:
             node = queue.pop(0)
@@ -324,9 +347,19 @@ class BPlusTree(object):
 
             if not isinstance(node, LeafNode):
                 queue += self.intersperse(node.values, height + 1)
-            print('lvl ' + str(height), '|'.join(map(str, node.keys)), ' -->\t current -> ', node.uid,
-                  '\t parent -> ',
-                  node.parent.uid if node.parent else None)
+
+            temp = ""
+            for i in node.keys:
+                temp += str(i) + "|"
+
+            if node.parent:
+                pTemp = str(node.parent.uid)
+            else:
+                pTemp = "None"
+
+            output += 'lvl ' + str(height) + ' ' + temp[0:len(temp) - 1] + ' ID -> ' + str(
+                node.uid) + ' PID -> ' + pTemp + "\n"
+        return output
 
     def getLeftmostLeaf(self):
         if not self.root:
